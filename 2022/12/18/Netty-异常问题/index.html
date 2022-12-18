@@ -16,22 +16,22 @@
   <meta name="author" content="TanLinRu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Netty服务端模板1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677package com.tlq.netty.example;import io.netty">
+    <meta name="description" content="Netty 异常问题本周的时候，线上的TCP服务，出现了Ping超时的问题，当时仔细从一下方面着手解决异常问题  当前服务哪里出现了阻塞操作 业务线程哪里耗时了  后来排查了下并做了整体的，方案如下  修改IM发送方式，使用线程池进行同步非阻塞处理 （暂时方案）将ping业务单独放到一个线程池处理 增加业务消费监控，方便后续定位异常问题 （因为服务器设置的TCP内存自适应分配）TCP发送&amp;#x2F">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Netty 服务端模板代码">
-<meta property="og:url" content="http://example.com/2022/12/18/Netty-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81/index.html">
+<meta property="og:title" content="Netty - 异常问题">
+<meta property="og:url" content="http://example.com/2022/12/18/Netty-%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="TanLinRu">
-<meta property="og:description" content="Netty服务端模板1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677package com.tlq.netty.example;import io.netty">
+<meta property="og:description" content="Netty 异常问题本周的时候，线上的TCP服务，出现了Ping超时的问题，当时仔细从一下方面着手解决异常问题  当前服务哪里出现了阻塞操作 业务线程哪里耗时了  后来排查了下并做了整体的，方案如下  修改IM发送方式，使用线程池进行同步非阻塞处理 （暂时方案）将ping业务单独放到一个线程池处理 增加业务消费监控，方便后续定位异常问题 （因为服务器设置的TCP内存自适应分配）TCP发送&amp;#x2F">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-12-18T12:38:06.000Z">
-<meta property="article:modified_time" content="2022-12-18T12:52:54.009Z">
+<meta property="article:published_time" content="2022-12-18T12:54:35.000Z">
+<meta property="article:modified_time" content="2022-12-18T13:16:25.543Z">
 <meta property="article:author" content="TanLinRu">
-<meta property="article:tag" content="Netty 服务端摸板">
+<meta property="article:tag" content="Netty 异常问题">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Netty 服务端模板代码 - TanLinRu</title>
+  <title>Netty - 异常问题 - TanLinRu</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Netty 服务端模板代码"></span>
+            <span id="subtitle" data-typed-text="Netty - 异常问题"></span>
           
         </div>
 
@@ -207,7 +207,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-12-18 20:38" pubdate>
+        <time datetime="2022-12-18 20:54" pubdate>
           2022年12月18日 晚上
         </time>
       </span>
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k 字
+          528 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          25 分钟
+          5 分钟
         
       </span>
     
@@ -268,13 +268,36 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Netty 服务端模板代码</h1>
+            <h1 style="display: none">Netty - 异常问题</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Netty服务端模板"><a href="#Netty服务端模板" class="headerlink" title="Netty服务端模板"></a>Netty服务端模板</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tlq.netty.example;<br><br><span class="hljs-keyword">import</span> io.netty.bootstrap.ServerBootstrap;<br><span class="hljs-keyword">import</span> io.netty.channel.Channel;<br><span class="hljs-keyword">import</span> io.netty.channel.ChannelInitializer;<br><span class="hljs-keyword">import</span> io.netty.channel.ChannelPipeline;<br><span class="hljs-keyword">import</span> io.netty.channel.EventLoopGroup;<br><span class="hljs-keyword">import</span> io.netty.channel.nio.NioEventLoopGroup;<br><span class="hljs-keyword">import</span> io.netty.channel.socket.SocketChannel;<br><span class="hljs-keyword">import</span> io.netty.channel.socket.nio.NioServerSocketChannel;<br><span class="hljs-keyword">import</span> io.netty.handler.codec.http.HttpObjectAggregator;<br><span class="hljs-keyword">import</span> io.netty.handler.codec.http.HttpRequestDecoder;<br><span class="hljs-keyword">import</span> io.netty.handler.codec.http.HttpResponseEncoder;<br><span class="hljs-keyword">import</span> io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;<br><span class="hljs-keyword">import</span> io.netty.channel.ChannelHandlerContext;<br><span class="hljs-keyword">import</span> io.netty.channel.SimpleChannelInboundHandler;<br><span class="hljs-keyword">import</span> io.netty.handler.codec.http.websocketx.TextWebSocketFrame;<br><span class="hljs-keyword">import</span> org.slf4j.Logger;<br><span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Stephen Mallette (http://stephen.genoprime.com)</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Server</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Logger</span> <span class="hljs-variable">logger</span> <span class="hljs-operator">=</span> LoggerFactory.getLogger(Server.class);<br>    <span class="hljs-keyword">private</span> Channel channel;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">//Reactor线程池</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-type">EventLoopGroup</span> <span class="hljs-variable">bossGroup</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>(<span class="hljs-number">1</span>);<br>        <span class="hljs-comment">//Hnadler线程池</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-type">EventLoopGroup</span> <span class="hljs-variable">workerGroup</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>(<span class="hljs-number">2</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">final</span> <span class="hljs-type">ServerBootstrap</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerBootstrap</span>();<br>            <span class="hljs-comment">//注册相关Reactor线程/handler线程</span><br>            b.group(bossGroup, workerGroup)<br>                    .channel(NioServerSocketChannel.class)<br>                <span class="hljs-comment">//注册 childHandler 相关 channelPipeline</span><br>                    .childHandler(<span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocketServerInitializer</span>());<br><br>            <span class="hljs-comment">//bind</span><br>            ch = b.bind(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8182</span>).sync().channel();<br>            ch.closeFuture().sync();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            bossGroup.shutdownGracefully();<br>            workerGroup.shutdownGracefully();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-keyword">final</span> String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Server</span>().run();<br>    &#125;<br><br>    <span class="hljs-comment">//相关 channelHnalder处理</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketServerInitializer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ChannelInitializer</span>&lt;SocketChannel&gt; &#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initChannel</span><span class="hljs-params">(<span class="hljs-keyword">final</span> SocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>            <span class="hljs-keyword">final</span> <span class="hljs-type">ChannelPipeline</span> <span class="hljs-variable">pipeline</span> <span class="hljs-operator">=</span> ch.pipeline();<br>            pipeline.addLast(<span class="hljs-string">&quot;http-request-decoder&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">HttpRequestDecoder</span>());<br>            pipeline.addLast(<span class="hljs-string">&quot;aggregator&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">HttpObjectAggregator</span>(<span class="hljs-number">1</span>));<br>            pipeline.addLast(<span class="hljs-string">&quot;http-response-encoder&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">HttpResponseEncoder</span>());<br>            pipeline.addLast(<span class="hljs-string">&quot;request-handler&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocketServerProtocolHandler</span>(<span class="hljs-string">&quot;/websocket&quot;</span>));<br>            pipeline.addLast(<span class="hljs-string">&quot;handler&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">SomeHandler</span>());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SomeHandler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SimpleChannelInboundHandler</span>&lt;TextWebSocketFrame&gt; &#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">channelRead0</span><span class="hljs-params">(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>            <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> textWebSocketFrame.text();<br>            <span class="hljs-comment">// uncomment to print request</span><br>            <span class="hljs-comment">// /logger.info(&quot;Request received: &#123;&#125;&quot;, x);</span><br>            <span class="hljs-keyword">final</span> String[] y = x.split(<span class="hljs-string">&quot;:&quot;</span>);<br>            channelHandlerContext.writeAndFlush(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TextWebSocketFrame</span>(y[<span class="hljs-number">0</span>] + <span class="hljs-string">&quot;:&quot;</span> + y[<span class="hljs-number">1</span>].toUpperCase()));<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h2 id="Netty-异常问题"><a href="#Netty-异常问题" class="headerlink" title="Netty 异常问题"></a>Netty 异常问题</h2><p>本周的时候，线上的TCP服务，出现了<code>Ping</code>超时的问题，当时仔细从一下方面着手解决异常问题</p>
+<ul>
+<li>当前服务哪里出现了阻塞操作</li>
+<li>业务线程哪里耗时了</li>
+</ul>
+<p>后来排查了下并做了整体的，方案如下</p>
+<ul>
+<li>修改IM发送方式，使用线程池进行同步非阻塞处理</li>
+<li>（暂时方案）将<code>ping</code>业务单独放到一个线程池处理</li>
+<li>增加业务消费监控，方便后续定位异常问题</li>
+<li>（因为服务器设置的TCP内存自适应分配）TCP发送&#x2F;接受缓冲区</li>
+</ul>
+<p>后来是完美解决（暂时解决了）</p>
+<p><strong>但因为自己当时没好好审代码(就自己太菜，不好好学)，导致服务出现了频繁的FULL GC</strong></p>
+<p>异常代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">pipeline.addLast(ew <span class="hljs-title function_">NioEventLoopGroup</span><span class="hljs-params">()</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">PingHandler</span>());<br></code></pre></td></tr></table></figure>
 
+<blockquote>
+<p><strong>因为每次创建 <code>channel</code>，相关的<code>channelPipeline</code>都会实例化一次</strong></p>
+<p><strong>那就是上述的代码，会在每次生成一个线程池+线程</strong></p>
+<p><strong>业务方的这样的话，再业务方没关闭相关TCP连接时，服务便会保留相关连接，且内存损耗增加，最后导致业务方<code>ping</code>连接失败，重连，进而Full GC频繁增加</strong></p>
+<p><strong>同时，因为业务重连，导致 RECV-Q增加，因为业务根本没<code>accept</code>，导致全连接队列增加</strong></p>
+</blockquote>
+<p><strong>解决方案</strong></p>
+<p><strong>把相关<code>线程池</code>作为变量传入，避免重复创建导致Full gc</strong></p>
 
                 
               </div>
@@ -308,7 +331,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Netty-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%91%B8%E6%9D%BF/">#Netty 服务端摸板</a>
+        <a href="/tags/Netty-%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/">#Netty 异常问题</a>
       
     </div>
   
@@ -320,8 +343,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Netty 服务端模板代码</div>
-      <div>http://example.com/2022/12/18/Netty-服务端模板代码/</div>
+      <div>Netty - 异常问题</div>
+      <div>http://example.com/2022/12/18/Netty-异常问题/</div>
     </div>
     <div class="license-meta">
       
@@ -365,18 +388,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/12/18/Netty-%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/" title="Netty - 异常问题">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Netty - 异常问题</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/12/18/Linux-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E5%91%BD%E4%BB%A4/" title="Linux - 常见问题排查命令">
-                        <span class="hidden-mobile">Linux - 常见问题排查命令</span>
+                      <a href="/2022/12/18/Netty-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81/" title="Netty 服务端模板代码">
+                        <span class="hidden-mobile">Netty 服务端模板代码</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

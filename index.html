@@ -223,6 +223,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/12/18/Netty-%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/" target="_self">
+          Netty - 异常问题
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/12/18/Netty-%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/" target="_self">
+        <div>
+          Netty 异常问题本周的时候，线上的TCP服务，出现了Ping超时的问题，当时仔细从一下方面着手解决异常问题  当前服务哪里出现了阻塞操作 业务线程哪里耗时了  后来排查了下并做了整体的，方案如下  修改IM发送方式，使用线程池进行同步非阻塞处理 （暂时方案）将ping业务单独放到一个线程池处理 增加业务消费监控，方便后续定位异常问题 （因为服务器设置的TCP内存自适应分配）TCP发送&#x2F
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-18 20:54" pubdate>
+              2022-12-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Netty/" class="category-chain-item">Netty</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Netty-%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/">#Netty 异常问题</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/12/18/Netty-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81/" target="_self">
           Netty 服务端模板代码
         </a>

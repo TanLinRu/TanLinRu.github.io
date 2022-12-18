@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Netty - 异常问题</title>
+    <link href="/2022/12/18/Netty-%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/"/>
+    <url>/2022/12/18/Netty-%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Netty-异常问题"><a href="#Netty-异常问题" class="headerlink" title="Netty 异常问题"></a>Netty 异常问题</h2><p>本周的时候，线上的TCP服务，出现了<code>Ping</code>超时的问题，当时仔细从一下方面着手解决异常问题</p><ul><li>当前服务哪里出现了阻塞操作</li><li>业务线程哪里耗时了</li></ul><p>后来排查了下并做了整体的，方案如下</p><ul><li>修改IM发送方式，使用线程池进行同步非阻塞处理</li><li>（暂时方案）将<code>ping</code>业务单独放到一个线程池处理</li><li>增加业务消费监控，方便后续定位异常问题</li><li>（因为服务器设置的TCP内存自适应分配）TCP发送&#x2F;接受缓冲区</li></ul><p>后来是完美解决（暂时解决了）</p><p><strong>但因为自己当时没好好审代码(就自己太菜，不好好学)，导致服务出现了频繁的FULL GC</strong></p><p>异常代码如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">pipeline.addLast(ew <span class="hljs-title function_">NioEventLoopGroup</span><span class="hljs-params">()</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">PingHandler</span>());<br></code></pre></td></tr></table></figure><blockquote><p><strong>因为每次创建 <code>channel</code>，相关的<code>channelPipeline</code>都会实例化一次</strong></p><p><strong>那就是上述的代码，会在每次生成一个线程池+线程</strong></p><p><strong>业务方的这样的话，再业务方没关闭相关TCP连接时，服务便会保留相关连接，且内存损耗增加，最后导致业务方<code>ping</code>连接失败，重连，进而Full GC频繁增加</strong></p><p><strong>同时，因为业务重连，导致 RECV-Q增加，因为业务根本没<code>accept</code>，导致全连接队列增加</strong></p></blockquote><p><strong>解决方案</strong></p><p><strong>把相关<code>线程池</code>作为变量传入，避免重复创建导致Full gc</strong></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Netty</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Netty 异常问题</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Netty 服务端模板代码</title>
     <link href="/2022/12/18/Netty-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81/"/>
     <url>/2022/12/18/Netty-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81/</url>
