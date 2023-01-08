@@ -1,0 +1,644 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/blog.png">
+  <link rel="icon" href="/img/blog.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="TanLinRu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Log4j2配置模板1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml versio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Log4j2配置模板">
+<meta property="og:url" content="http://example.com/2023/01/08/Log4j2%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/index.html">
+<meta property="og:site_name" content="TanLinRu">
+<meta property="og:description" content="Log4j2配置模板1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml versio">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-08T12:10:49.000Z">
+<meta property="article:modified_time" content="2023-01-08T12:13:05.596Z">
+<meta property="article:author" content="TanLinRu">
+<meta property="article:tag" content="Log4J2配置模板">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Log4j2配置模板 - TanLinRu</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TanLinRu</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Log4j2配置模板"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-08 20:10" pubdate>
+          2023年1月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Log4j2配置模板</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Log4j2配置模板"><a href="#Log4j2配置模板" class="headerlink" title="Log4j2配置模板"></a>Log4j2配置模板</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-comment">&lt;!--日志级别以及优先级排序: OFF &gt; FATAL &gt; ERROR &gt; WARN &gt; INFO &gt; DEBUG &gt; TRACE &gt; ALL --&gt;</span><br><span class="hljs-comment">&lt;!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出--&gt;</span><br><span class="hljs-comment">&lt;!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span> <span class="hljs-attr">status</span>=<span class="hljs-string">&quot;WARN&quot;</span> <span class="hljs-attr">monitorInterval</span>=<span class="hljs-string">&quot;1800&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--预先定义通用pattern--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--输出日志的格式--&gt;</span><br>        <span class="hljs-comment">&lt;!--&lt;property name=&quot;pattern&quot;&gt;[%d&#123;yyyy-MM-dd HH:mm:ss:SSS&#125;&#123;GMT+8&#125;][%5p][%20c][- %l - %m] %n&lt;/property&gt;--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;pattern&quot;</span>&gt;</span>%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;-1&#125;.%M()/%L - %msg%xEx%n<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--&lt;property name=&quot;pattern&quot;&gt;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125;.%M()/%L  - %msg%xEx%n&lt;/property&gt;--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;filePath&quot;</span>&gt;</span>./logs<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--&lt;property name=&quot;filePath&quot;&gt;C:UsersAdministratorDesktoplog&lt;/property&gt;--&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--先定义所有的appender--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">appenders</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--这个输出控制台的配置--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">console</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Console&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;SYSTEM_OUT&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--输出日志的格式--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">PatternLayout</span> <span class="hljs-attr">pattern</span>=<span class="hljs-string">&quot;$&#123;pattern&#125;&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">console</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档--&gt;</span><br>        <span class="hljs-comment">&lt;!-- filePattern：rollover时原文件所属的文件夹目录和文件名规则--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">RollingFile</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RollingFileInfo&quot;</span> <span class="hljs-attr">fileName</span>=<span class="hljs-string">&quot;$&#123;filePath&#125;/info.log&quot;</span></span><br><span class="hljs-tag">                     <span class="hljs-attr">filePattern</span>=<span class="hljs-string">&quot;$&#123;filePath&#125;/$$&#123;date:yyyy-MM&#125;/info-%d&#123;yyyy-MM-dd&#125;-%i.log&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!-- 过滤日志：过滤器都有两个属性onMatch和onMismatch，指定匹配过滤器和不匹配过滤器时候执行的操作，有三个取值ACCEPT，DENY，NEUTRAL--&gt;</span><br>            <span class="hljs-comment">&lt;!-- 该过滤器只将info级别输入到文件--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">Filters</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">ThresholdFilter</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;warn&quot;</span> <span class="hljs-attr">onMatch</span>=<span class="hljs-string">&quot;DENY&quot;</span> <span class="hljs-attr">onMismatch</span>=<span class="hljs-string">&quot;NEUTRAL&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">ThresholdFilter</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;info&quot;</span> <span class="hljs-attr">onMatch</span>=<span class="hljs-string">&quot;ACCEPT&quot;</span> <span class="hljs-attr">onMismatch</span>=<span class="hljs-string">&quot;DENY&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">Filters</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">PatternLayout</span> <span class="hljs-attr">pattern</span>=<span class="hljs-string">&quot;$&#123;pattern&#125;&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">Policies</span>&gt;</span><br>                <span class="hljs-comment">&lt;!--当日期不匹配的时候执行rollover。例如上面定义的filePattern是$&#123;log_path&#125;logs/app-%d&#123;yyyy-MM-dd&#125;-%i.log.zip，</span><br><span class="hljs-comment">                日期格式包含年月日，那么就会每天执行一次rollover。它有两个可定义的属性，一个是interval，表示rollover的间隔，</span><br><span class="hljs-comment">                单位是日期的最小单位。比如如果日期是%d&#123;yyyy-MM-dd-HH&#125;，那么interval=&quot;6&quot;意思就是每隔六个小时。另一个属性是modulate，</span><br><span class="hljs-comment">                指定是否调整rollover的间隔。假如现在是上午3点，间隔是4个小时，当modulate为false的时候下次rollover就是上午七点，</span><br><span class="hljs-comment">                以此类推，如果modulate是true下次rollover就是上午4点，然后以此类推。--&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">TimeBasedTriggeringPolicy</span> <span class="hljs-attr">modulate</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">interval</span>=<span class="hljs-string">&quot;1&quot;</span>/&gt;</span><br>                <span class="hljs-comment">&lt;!-- 日志文件到达指定大小是执行rollover，单位可以使KB、MB、GB。--&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">SizeBasedTriggeringPolicy</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;50 MB&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">Policies</span>&gt;</span><br>            <span class="hljs-comment">&lt;!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了10 --&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">DefaultRolloverStrategy</span> <span class="hljs-attr">max</span>=<span class="hljs-string">&quot;10&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">RollingFile</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">RollingFile</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RollingFileWarn&quot;</span> <span class="hljs-attr">fileName</span>=<span class="hljs-string">&quot;$&#123;filePath&#125;/warn.log&quot;</span></span><br><span class="hljs-tag">                     <span class="hljs-attr">filePattern</span>=<span class="hljs-string">&quot;$&#123;filePath&#125;/$$&#123;date:yyyy-MM&#125;/warn-%d&#123;yyyy-MM-dd&#125;-%i.log&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!-- 该过滤器只将warn级别输入到文件--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">Filters</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">ThresholdFilter</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;error&quot;</span> <span class="hljs-attr">onMatch</span>=<span class="hljs-string">&quot;DENY&quot;</span> <span class="hljs-attr">onMismatch</span>=<span class="hljs-string">&quot;NEUTRAL&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">ThresholdFilter</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;warn&quot;</span> <span class="hljs-attr">onMatch</span>=<span class="hljs-string">&quot;ACCEPT&quot;</span> <span class="hljs-attr">onMismatch</span>=<span class="hljs-string">&quot;DENY&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">Filters</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">PatternLayout</span> <span class="hljs-attr">pattern</span>=<span class="hljs-string">&quot;$&#123;pattern&#125;&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">Policies</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">TimeBasedTriggeringPolicy</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">SizeBasedTriggeringPolicy</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;50 MB&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">Policies</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">DefaultRolloverStrategy</span> <span class="hljs-attr">max</span>=<span class="hljs-string">&quot;10&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">RollingFile</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">RollingFile</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RollingFileError&quot;</span> <span class="hljs-attr">fileName</span>=<span class="hljs-string">&quot;$&#123;filePath&#125;/error.log&quot;</span></span><br><span class="hljs-tag">                     <span class="hljs-attr">filePattern</span>=<span class="hljs-string">&quot;$&#123;filePath&#125;/$$&#123;date:yyyy-MM&#125;/error-%d&#123;yyyy-MM-dd&#125;-%i.log&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!-- 该过滤器只将error级别输入到文件--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">ThresholdFilter</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;error&quot;</span> <span class="hljs-attr">onMatch</span>=<span class="hljs-string">&quot;ACCEPT&quot;</span> <span class="hljs-attr">onMismatch</span>=<span class="hljs-string">&quot;DENY&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">PatternLayout</span> <span class="hljs-attr">pattern</span>=<span class="hljs-string">&quot;$&#123;pattern&#125;&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">Policies</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">TimeBasedTriggeringPolicy</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">SizeBasedTriggeringPolicy</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;50 MB&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">Policies</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">DefaultRolloverStrategy</span> <span class="hljs-attr">max</span>=<span class="hljs-string">&quot;10&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">RollingFile</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">appenders</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--然后定义logger，只有定义了logger并引入的appender，appender才会生效--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">loggers</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--过滤掉spring和mybatis的一些无用的DEBUG信息--&gt;</span><br>        <span class="hljs-comment">&lt;!--additivity是 子Logger 是否继承 父Logger 的 输出源（appender） 的标志位。</span><br><span class="hljs-comment">        具体说，默认情况下子Logger会继承父Logger的appender，也就是说子Logger会在父Logger的appender里输出。</span><br><span class="hljs-comment">        若是additivity设为false，则子Logger只会在自己的appender里输出，而不会在父Logger的appender里输出。--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">logger</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;org.springframework&quot;</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;INFO&quot;</span> <span class="hljs-attr">additivity</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">logger</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;org.mybatis&quot;</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;INFO&quot;</span> <span class="hljs-attr">additivity</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">root</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;info&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">appender-ref</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;Console&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">appender-ref</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;RollingFileInfo&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">appender-ref</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;RollingFileWarn&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">appender-ref</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;RollingFileError&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">root</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--打印sql--&gt;</span><br>        <span class="hljs-comment">&lt;!--&lt;logger name=&quot;org.mybatis&quot; level=&quot;DEBUG&quot; additivity=&quot;true&quot;/&gt;--&gt;</span><br>        <span class="hljs-comment">&lt;!--&lt;logger name=&quot;com.holderzone.saas.store.order.mapper&quot; level=&quot;DEBUG&quot; additivity=&quot;true&quot;&gt;--&gt;</span><br>        <span class="hljs-comment">&lt;!--&lt;appender-ref ref=&quot;Console&quot;/&gt;--&gt;</span><br>        <span class="hljs-comment">&lt;!--&lt;/logger&gt;--&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">loggers</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Log4J2%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/" class="category-chain-item">Log4J2配置模板</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Log4J2%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/">#Log4J2配置模板</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Log4j2配置模板</div>
+      <div>http://example.com/2023/01/08/Log4j2配置模板/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>TanLinRu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/08/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" title="分布式事务">
+                        <span class="hidden-mobile">分布式事务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
